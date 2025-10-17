@@ -38,7 +38,8 @@ def test_call_lava_test_plan_testcases(param):
 # meta-qcom tests
 meta_qcom_project_device_path = "lava_test_plans/projects/meta-qcom/devices"
 meta_qcom_devices = [
-    os.path.basename(d) for d in glob.glob("lava_test_plans/projects/meta-qcom/devices/*")
+    os.path.basename(d)
+    for d in glob.glob("lava_test_plans/projects/meta-qcom/devices/*")
 ]
 assert len(meta_qcom_devices) > 0
 meta_qcom_testplans = ["meta-qcom/kernel"]
@@ -48,7 +49,12 @@ tests = []
 for device in meta_qcom_devices:
     for testplan in meta_qcom_testplans:
         tests.append(
-            (meta_qcom_variable_input_file, device, testplan, meta_qcom_project_device_path)
+            (
+                meta_qcom_variable_input_file,
+                device,
+                testplan,
+                meta_qcom_project_device_path,
+            )
         )
 
 
