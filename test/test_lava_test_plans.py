@@ -65,3 +65,35 @@ def test_call_lava_test_plan_testplans_project_meta_qcom(param):
         f'lava_test_plans --dry-run --variables "{variable_input_file}" --testplan-device-path "{project_device_path}" --device-type "{device}" --test-plan "{testplan}" {test_lava_validity}'
     )
     assert main() == 0
+
+
+# qcom-deb-images tests
+qcom_deb_images_project_device_path = "lava_test_plans/projects/qcom-deb-images/devices"
+qcom_deb_images_devices = [
+    os.path.basename(d)
+    for d in glob.glob("lava_test_plans/projects/qcom-deb-images/devices/*")
+]
+assert len(qcom_deb_images_devices) > 0
+qcom_deb_images_testplans = ["qcom-deb-images"]
+assert len(qcom_deb_images_testplans) > 0
+qcom_deb_images_variable_input_file = "projects/qcom-deb-images/variables.yaml"
+tests = []
+for device in qcom_deb_images_devices:
+    for testplan in qcom_deb_images_testplans:
+        tests.append(
+            (
+                qcom_deb_images_variable_input_file,
+                device,
+                testplan,
+                qcom_deb_images_project_device_path,
+            )
+        )
+
+
+@pytest.mark.parametrize("param", tests)
+def test_call_lava_test_plan_testplans_project_qcom_deb_images(param):
+    variable_input_file, device, testplan, project_device_path = param
+    sys.argv = shlex.split(
+        f'lava_test_plans --dry-run --variables "{variable_input_file}" --testplan-device-path "{project_device_path}" --device-type "{device}" --test-plan "{testplan}" {test_lava_validity}'
+    )
+    assert main() == 0
